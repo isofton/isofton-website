@@ -73,7 +73,7 @@ export function ButtonLink({
 export function CtaBand() {
   return (
     <section className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#c9b8e6] via-[#e8d4f0] to-[#c9ebf7]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#e8e4f4] via-[#f7f8fb] to-[#e4f3f8]" />
       <Container className="relative grid items-center gap-8 py-14 lg:grid-cols-[1.3fr_0.7fr]">
         <div>
           <p className="text-sm font-medium text-[#5d4b86]">A quiet next step</p>

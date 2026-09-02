@@ -103,7 +103,7 @@ export default function HomePage() {
             From first brief to something people can open.
           </h2>
           <div className="soft-card relative mx-auto mt-8 aspect-[16/9] w-full max-w-5xl overflow-hidden rounded-[32px] p-2">
-            <div className="relative h-full overflow-hidden rounded-[24px] bg-[#f4eef8]">
+            <div className="relative h-full overflow-hidden rounded-[24px] bg-white">
               <Image
                 src="/images/idea-to-live.png"
                 alt="iSofton delivery across tablet, web, and mobile"
