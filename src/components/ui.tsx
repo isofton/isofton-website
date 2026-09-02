@@ -1,0 +1,124 @@
+import Image from "next/image";
+import Link from "next/link";
+import { type ReactNode } from "react";
+import { SoftBg } from "@/components/SoftBg";
+
+export function PageShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="relative bg-mesh">
+      <SoftBg />
+      <div className="relative">{children}</div>
+    </div>
+  );
+}
+
+export function Container({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return <div className={`mx-auto w-full max-w-6xl px-4 sm:px-6 ${className}`}>{children}</div>;
+}
+
+export function PageHero({
+  eyebrow,
+  title,
+  lead,
+}: {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  image?: string;
+}) {
+  return (
+    <section className="relative">
+      <Container className="relative py-16 sm:py-20">
+        <p className="text-sm font-medium text-lavender-deep">{eyebrow}</p>
+        <h1 className="mt-3 max-w-3xl font-display text-4xl font-medium leading-tight text-ink sm:text-5xl">
+          {title}
+        </h1>
+        <p className="mt-5 max-w-xl text-base leading-7 text-ink-soft sm:text-lg">{lead}</p>
+      </Container>
+    </section>
+  );
+}
+
+export function ButtonLink({
+  href,
+  children,
+  variant = "primary",
+}: {
+  href: string;
+  children: ReactNode;
+  variant?: "primary" | "ghost" | "light";
+}) {
+  const styles = {
+    primary: "bg-[#6f5b9a] text-white hover:bg-[#5d4b86]",
+    ghost: "border border-[#d8ccec] bg-white/70 text-ink hover:bg-white",
+    light: "bg-white/90 text-ink hover:bg-white",
+  }[variant];
+
+  return (
+    <Link
+      href={href}
+      className={`inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium transition ${styles}`}
+    >
+      {children}
+    </Link>
+  );
+}
+
+export function CtaBand() {
+  return (
+    <section className="relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#c9b8e6] via-[#e8d4f0] to-[#c9ebf7]" />
+      <Container className="relative grid items-center gap-8 py-14 lg:grid-cols-[1.3fr_0.7fr]">
+        <div>
+          <p className="text-sm font-medium text-[#5d4b86]">A quiet next step</p>
+          <h2 className="mt-3 font-display text-3xl font-medium leading-tight text-ink sm:text-4xl">
+            Tell us what you want live. We will reply within a day.
+          </h2>
+          <p className="mt-4 max-w-xl text-ink-soft">
+            A short brief is enough. No form maze.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-3 lg:justify-end">
+          <ButtonLink href="/contact">Book a call</ButtonLink>
+          <a
+            href="mailto:hello@isofton.com"
+            className="inline-flex items-center text-sm text-ink-soft hover:text-ink"
+          >
+            hello@isofton.com
+          </a>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+export function Frame({
+  src,
+  alt,
+  className = "",
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  priority?: boolean;
+}) {
+  return (
+    <div className={`relative overflow-hidden rounded-[28px] bg-white/50 ${className}`}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority={priority}
+        className="object-cover"
+        sizes="(min-width: 1024px) 50vw, 100vw"
+      />
+    </div>
+  );
+}

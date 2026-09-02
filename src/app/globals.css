@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply text-ink antialiased;
+  font-family: var(--font-exo), Exo, sans-serif;
+  background: #fbf8fc;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-exo), Exo, sans-serif;
+}
+
+::selection {
+  background: #ddd0f0;
+  color: #1a1d26;
+}
+
+.bg-mesh {
+  background-color: #fbf8fc;
+  background-image:
+    radial-gradient(900px 520px at 8% -8%, rgba(201, 184, 230, 0.42), transparent 58%),
+    radial-gradient(720px 460px at 96% 6%, rgba(126, 200, 232, 0.28), transparent 52%),
+    radial-gradient(640px 420px at 70% 100%, rgba(240, 160, 140, 0.16), transparent 55%),
+    radial-gradient(circle at 1px 1px, rgba(155, 134, 189, 0.09) 1px, transparent 0);
+  background-size: auto, auto, auto, 22px 22px;
+}
+
+.soft-card {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 18px 40px -28px rgba(124, 104, 173, 0.45);
+  backdrop-filter: blur(16px);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(2px);
+  pointer-events: none;
+}
