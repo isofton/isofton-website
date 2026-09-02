@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Logo } from "@/components/Logo";
-import { nav, site } from "@/lib/site";
+import { nav } from "@/lib/site";
 
 export function Header() {
   const pathname = usePathname();
@@ -12,14 +12,6 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/60 bg-white/70 backdrop-blur-xl">
-      <div className="hidden text-[12px] text-ink-muted lg:block">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-1.5 sm:px-6">
-          <a href={`mailto:${site.email}`} className="hover:text-ink">
-            {site.email}
-          </a>
-          <p>Mumbai · Surat</p>
-        </div>
-      </div>
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Logo compact />
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">

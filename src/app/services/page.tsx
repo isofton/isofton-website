@@ -201,7 +201,7 @@ export default function ServicesPage() {
               You are in the work at every stage. Launch is a milestone — not the last time we talk.
             </p>
           </Reveal>
-          <ol className="mt-12 space-y-2">
+          <ol className="mt-12">
             {process.map((step, index) => (
               <li key={step.n}>
                 <Reveal delay={40}>
@@ -215,7 +215,9 @@ export default function ServicesPage() {
                     <p className="mt-2 text-sm leading-7 text-ink-soft">{step.body}</p>
                   </article>
                 </Reveal>
-                {index < process.length - 1 && <StepArrow flip={index % 2 === 1} />}
+                {index < process.length - 1 && (
+                  <StepArrow direction={index % 2 === 0 ? "right" : "left"} />
+                )}
               </li>
             ))}
           </ol>

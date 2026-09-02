@@ -254,12 +254,12 @@ export const faqs = [
 ];
 
 export const clients = [
-  { name: "Sidhan Investments", sector: "Investments" },
-  { name: "Inspace Design", sector: "Design" },
-  { name: "Mobel & Litt", sector: "Furniture & lighting" },
-  { name: "FinStage", sector: "Finance" },
-  { name: "VIP Visawise", sector: "Immigration" },
-  { name: "Shivi Beauty Care", sector: "Beauty" },
+  { name: "Sidhan Investments", sector: "Investments", logo: "/images/clients/sidhan.png" },
+  { name: "Inspace Design", sector: "Design", logo: "/images/clients/inspace.png" },
+  { name: "Mobel & Litt", sector: "Furniture & lighting", logo: "/images/clients/mobel.png" },
+  { name: "FinStage", sector: "Finance", logo: "/images/clients/finstage.png" },
+  { name: "VIP Visawise", sector: "Immigration", logo: "/images/clients/visawise.png" },
+  { name: "Shivi Beauty Care", sector: "Beauty", logo: "/images/clients/shivi.png" },
 ];
 
 export function getService(slug: string) {

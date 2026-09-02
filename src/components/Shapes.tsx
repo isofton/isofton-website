@@ -28,21 +28,38 @@ export function Shapes({ variant = "page" }: { variant?: "page" | "hero" | "proc
   );
 }
 
-export function StepArrow({ flip = false }: { flip?: boolean }) {
+export function StepArrow({ direction = "right" }: { direction?: "right" | "left" }) {
+  const toRight = direction === "right";
+  const markerId = toRight ? "iso-arrow-right" : "iso-arrow-left";
+
   return (
-    <svg
-      viewBox="0 0 180 48"
-      className={`mx-auto hidden h-10 w-40 text-[#9b86bd]/70 md:block ${flip ? "rotate-180" : ""}`}
-      aria-hidden
-    >
-      <path
-        d="M8 36 C 50 8, 130 8, 172 28"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-      <path d="M160 18 l14 12 -16 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
+    <div className="pointer-events-none relative -my-1 hidden h-[72px] w-full md:block" aria-hidden>
+      <svg viewBox="0 0 800 80" className="h-full w-full" fill="none">
+        <defs>
+          <marker
+            id={markerId}
+            markerWidth="12"
+            markerHeight="12"
+            refX="10"
+            refY="6"
+            orient="auto"
+            markerUnits="userSpaceOnUse"
+          >
+            <path d="M1 1.8 L10.5 6 L1 10.2 Z" fill="#9b86bd" />
+          </marker>
+        </defs>
+        <path
+          d={
+            toRight
+              ? "M170 6 C 260 6, 360 18, 470 40 S 640 74, 720 74"
+              : "M630 6 C 540 6, 440 18, 330 40 S 160 74, 80 74"
+          }
+          stroke="#9b86bd"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          markerEnd={`url(#${markerId})`}
+        />
+      </svg>
+    </div>
   );
 }

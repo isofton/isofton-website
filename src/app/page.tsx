@@ -61,11 +61,11 @@ export default function HomePage() {
             <div className="soft-card relative mx-auto aspect-[4/3] w-full max-w-md overflow-hidden rounded-[32px] p-2">
               <div className="relative h-full overflow-hidden rounded-[24px]">
                 <Image
-                  src="/images/hero-team.jpg"
-                  alt="iSofton working session"
+                  src="/images/hero-build.png"
+                  alt="Team reviewing an app, website, and dashboard together"
                   fill
                   priority
-                  className="object-cover"
+                  className="object-cover object-center"
                   sizes="50vw"
                 />
               </div>
@@ -78,18 +78,20 @@ export default function HomePage() {
         <Container className="pb-6">
           <div className="soft-card rounded-[28px] px-6 py-8">
             <p className="text-center text-sm font-medium text-lavender-deep">Our clients</p>
-            <div className="relative mx-auto mt-5 h-14 w-full max-w-4xl sm:h-16">
-              <Image
-                src="/images/clients.png"
-                alt="Sidhan Investments, Inspace Design, Mobel & Litt, FinStage, VIP Visawise, Shivi Beauty Care"
-                fill
-                className="object-contain opacity-80"
-                sizes="800px"
-              />
-            </div>
-            <ul className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-1 text-xs text-ink-muted">
+            <ul className="mt-6 grid grid-cols-2 items-center gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
               {clients.map((client) => (
-                <li key={client.name}>{client.name}</li>
+                <li key={client.name} className="flex flex-col items-center gap-2">
+                  <div className="relative flex h-12 w-full items-center justify-center">
+                    <Image
+                      src={client.logo}
+                      alt={client.name}
+                      fill
+                      className="object-contain"
+                      sizes="160px"
+                    />
+                  </div>
+                  <p className="text-center text-[11px] text-ink-muted">{client.name}</p>
+                </li>
               ))}
             </ul>
           </div>
@@ -108,7 +110,7 @@ export default function HomePage() {
                 src="/images/idea-to-live.png"
                 alt="iSofton delivery across tablet, web, and mobile"
                 fill
-                className="object-cover object-center"
+                className="object-cover object-center brightness-[1.06] saturate-[0.78] contrast-[1.02]"
                 sizes="(min-width: 1024px) 960px, 100vw"
               />
             </div>

@@ -80,16 +80,16 @@ export default function AboutPage() {
         <Container className="py-14">
           <p className="text-sm font-medium text-lavender-deep">Clients</p>
           <h2 className="mt-2 font-display text-3xl font-medium">Companies we work with</h2>
-          <div className="soft-card mt-8 rounded-[28px] px-6 py-8">
-            <div className="relative mx-auto h-14 w-full max-w-5xl sm:h-16">
-              <Image src="/images/clients.png" alt="iSofton clients" fill className="object-contain" sizes="960px" />
-            </div>
-          </div>
-          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {clients.map((client) => (
-              <li key={client.name} className="soft-card rounded-[24px] px-5 py-4">
-                <p className="font-display font-medium">{client.name}</p>
-                <p className="mt-1 text-sm text-ink-muted">{client.sector}</p>
+              <li key={client.name} className="soft-card flex items-center gap-4 rounded-[24px] px-5 py-5">
+                <div className="relative h-12 w-28 shrink-0">
+                  <Image src={client.logo} alt="" fill className="object-contain object-left" sizes="112px" />
+                </div>
+                <div>
+                  <p className="font-display font-medium">{client.name}</p>
+                  <p className="mt-1 text-sm text-ink-muted">{client.sector}</p>
+                </div>
               </li>
             ))}
           </ul>
