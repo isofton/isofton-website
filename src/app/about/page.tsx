@@ -57,7 +57,7 @@ export default function AboutPage() {
         </Container>
       </section>
       <section>
-        <Container className="py-14">
+        <Container className="py-10 sm:py-14">
           <h2 className="font-display text-3xl font-medium">What we hold to</h2>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {beliefs.map((item) => (
@@ -78,7 +78,7 @@ export default function AboutPage() {
         </Container>
       </section>
       <section>
-        <Container className="py-14">
+        <Container className="py-10 sm:py-14">
           <p className="text-sm font-medium text-lavender-deep">Clients</p>
           <h2 className="mt-2 font-display text-3xl font-medium">Companies we work with</h2>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -103,7 +103,7 @@ export default function AboutPage() {
         </Container>
       </section>
       <section>
-        <Container className="grid gap-6 py-14 md:grid-cols-2">
+        <Container className="grid gap-6 py-10 sm:py-14 md:grid-cols-2">
           {site.locations.map((location) => (
             <article key={location.city} className="soft-card overflow-hidden rounded-[28px]">
               <PhotoTile src={location.city === "Mumbai" ? "/images/photos/city-mumbai.jpg" : "/images/photos/city-surat.jpg"} alt={location.city} tone={location.city === "Mumbai" ? "cyan" : "coral"} className="h-48" sizes="(min-width: 768px) 50vw, 100vw" />

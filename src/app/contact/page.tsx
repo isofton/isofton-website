@@ -18,7 +18,7 @@ export default function ContactPage() {
         lead="Name, email, and what you want live. That is enough to start."
       />
       <section>
-        <Container className="grid gap-6 py-14 lg:grid-cols-[1.1fr_0.9fr]">
+        <Container className="grid gap-6 py-10 sm:py-14 lg:grid-cols-[1.1fr_0.9fr]">
           <ContactForm />
           <aside className="space-y-4">
             <div className="soft-card rounded-[24px] p-6">

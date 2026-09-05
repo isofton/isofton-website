@@ -30,7 +30,7 @@ export function NotchCard({
   const body = (
     <>
       <div
-        className={`relative ${height} overflow-hidden rounded-[22px] bg-[#f1eef8] shadow-card transition duration-300 group-hover:shadow-lift`}
+        className={`relative ${height} overflow-hidden rounded-[20px] bg-[#f1eef8] shadow-card transition duration-300 group-hover:shadow-lift`}
       >
         <Image
           src={src}
@@ -46,9 +46,11 @@ export function NotchCard({
           </span>
         )}
 
-        <div className="absolute bottom-0 left-0 max-w-[86%] rounded-tr-[24px] bg-white py-4 pl-5 pr-7">
-          <p className="font-display text-lg font-medium leading-snug text-ink">{title}</p>
-          {subtitle && <p className="mt-1 text-sm leading-5 text-lavender-deep">{subtitle}</p>}
+        <div className="absolute bottom-0 left-0 max-w-[82%] rounded-bl-[20px] rounded-tr-[26px] bg-white pb-4 pl-4 pr-6 pt-4 sm:max-w-[78%] sm:rounded-tr-[30px] sm:pb-5 sm:pl-6 sm:pr-9 sm:pt-5">
+          <p className="font-display text-[17px] font-medium leading-tight text-ink sm:text-[19px]">{title}</p>
+          {subtitle && (
+            <p className="mt-1 text-[13px] leading-5 text-ink-muted sm:mt-1.5 sm:text-[15px]">{subtitle}</p>
+          )}
         </div>
       </div>
       {footer}

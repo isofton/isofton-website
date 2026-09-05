@@ -16,16 +16,27 @@ const OPENERS: Reply[] = [
   { id: "project", label: "I have a project in mind" },
   { id: "services", label: "What do you build?" },
   { id: "pricing", label: "How do you charge?" },
+  { id: "company", label: "Who are you?" },
   { id: "human", label: "Talk to a person" },
 ];
 
+const BACK: Reply = { id: "menu", label: "Back to the start" };
+const TALK: Reply = { id: "human", label: "Talk to a person" };
+
 const TOPICS: Record<string, Topic> = {
+  menu: {
+    answer: "Sure — what would you like to know?",
+    next: OPENERS.filter((item) => item.id !== "human"),
+  },
+
+  /* ---- what you want built ---- */
   project: {
     answer:
       "Good place to start. Tell me in one line what you want live — you can type it below and it goes straight to the team.",
     next: [
       { id: "app", label: "A mobile app" },
       { id: "web", label: "A website or portal" },
+      { id: "erp", label: "ERP or CRM" },
       { id: "ai", label: "An AI assistant" },
       { id: "unsure", label: "Not sure yet" },
     ],
@@ -33,31 +44,68 @@ const TOPICS: Record<string, Topic> = {
   app: {
     answer:
       "iOS and Android, usually from one Flutter or React Native codebase. A focused first release is typically six to twelve weeks including store review.",
-    next: [{ id: "human", label: "Talk to a person" }],
+    next: [
+      { id: "timeline", label: "How long does it take?" },
+      { id: "maintain", label: "What about after launch?" },
+      TALK,
+    ],
     link: { href: "/services/app-development", label: "App development" },
   },
   web: {
     answer:
       "Marketing sites, customer portals, and SaaS dashboards in Next.js — with a CMS so your team can edit pages without a deploy.",
-    next: [{ id: "human", label: "Talk to a person" }],
+    next: [
+      { id: "stack", label: "What do you build with?" },
+      { id: "existing", label: "We already have a site" },
+      TALK,
+    ],
     link: { href: "/services/web-development", label: "Web development" },
+  },
+  erp: {
+    answer:
+      "Custom ERP and CRM for how you actually work — stock, orders, invoicing, leads and follow-ups in one system instead of five spreadsheets.",
+    next: [
+      { id: "existing", label: "We use something already" },
+      { id: "timeline", label: "How long does it take?" },
+      TALK,
+    ],
+    link: { href: "/services/web-development", label: "How we build it" },
   },
   ai: {
     answer:
       "Assistants grounded in your own documents and systems, with citations and a human review step. We add AI only where it removes real hours.",
-    next: [{ id: "human", label: "Talk to a person" }],
+    next: [
+      { id: "aisafe", label: "How do you stop wrong answers?" },
+      { id: "aidata", label: "Is our data safe?" },
+      TALK,
+    ],
     link: { href: "/services/artificial-intelligence", label: "Artificial intelligence" },
   },
   unsure: {
     answer:
       "That is fine — most briefs start there. Describe the problem rather than the solution and we will tell you what is worth building first.",
-    next: [{ id: "human", label: "Talk to a person" }],
+    next: [{ id: "process", label: "How does it work?" }, TALK],
   },
+
+  /* ---- AI detail ---- */
+  aisafe: {
+    answer:
+      "Answers come from your own content and are cited, the model is told to refuse anything outside its sources, and we score it against a fixed question set before and after every change.",
+    next: [{ id: "aidata", label: "Is our data safe?" }, TALK],
+  },
+  aidata: {
+    answer:
+      "Your content is not used to train anyone's model — we use business API tiers, and sensitive steps can stay inside your own cloud.",
+    next: [{ id: "ai", label: "Back to AI" }, TALK],
+  },
+
+  /* ---- commercial ---- */
   services: {
     answer:
-      "Six practices: app development, web, artificial intelligence, machine learning, cloud & IT, and product design. One team across all of them.",
+      "Six practices under one roof: app development, web, artificial intelligence, machine learning, cloud & IT, and product design.",
     next: [
       { id: "project", label: "I have a project in mind" },
+      { id: "stack", label: "What do you build with?" },
       { id: "pricing", label: "How do you charge?" },
     ],
     link: { href: "/services", label: "All services" },
@@ -66,20 +114,90 @@ const TOPICS: Record<string, Topic> = {
     answer:
       "Fixed-scope builds or a monthly retainer. After a short call we recommend one and put it in writing — and we say so if we are not the right fit.",
     next: [
+      { id: "quote", label: "Can I get a quote?" },
       { id: "start", label: "How fast can you start?" },
-      { id: "human", label: "Talk to a person" },
+      TALK,
     ],
+    link: { href: "/contact", label: "Send a brief" },
+  },
+  quote: {
+    answer:
+      "Send what you want live and roughly when. You get a written plan with what ships first, what waits and what it costs — before any code is written.",
+    next: [{ id: "process", label: "How does it work?" }, TALK],
     link: { href: "/contact", label: "Send a brief" },
   },
   start: {
     answer:
       "Usually within one to two weeks of agreeing scope. Discovery can start sooner if the brief is ready.",
-    next: [{ id: "human", label: "Talk to a person" }],
+    next: [{ id: "timeline", label: "How long does it take?" }, TALK],
   },
+  timeline: {
+    answer:
+      "A focused first release is typically six to twelve weeks. You see something clickable every Friday, so the date never comes as a surprise.",
+    next: [{ id: "process", label: "How does it work?" }, TALK],
+  },
+
+  /* ---- how we work ---- */
+  process: {
+    answer:
+      "Four stages: we map where your hours go, build the tool that carries the work, add AI only where it saves time, then stay while it grows.",
+    next: [
+      { id: "timeline", label: "How long does it take?" },
+      { id: "maintain", label: "What about after launch?" },
+      TALK,
+    ],
+    link: { href: "/engagement", label: "How we work" },
+  },
+  maintain: {
+    answer:
+      "We watch the first weeks after launch with you, then either hand over with a runbook or stay on a monthly retainer. Your call.",
+    next: [{ id: "own", label: "Who owns the code?" }, TALK],
+  },
+  own: {
+    answer:
+      "You do. Code, designs and IP stay with you, and we do not lock the product to us. The handover is written down either way.",
+    next: [{ id: "process", label: "How does it work?" }, TALK],
+  },
+  stack: {
+    answer:
+      "Next.js and React on the web, Flutter or React Native on mobile, Python for data and models, and AWS, GCP or Azure underneath. Chosen for the job, not for a slide.",
+    next: [{ id: "existing", label: "We already have something" }, TALK],
+    link: { href: "/services", label: "All services" },
+  },
+  existing: {
+    answer:
+      "That is common. We read the code, stabilise what is live, then add features. We only suggest a rewrite if the product truly cannot move otherwise.",
+    next: [{ id: "process", label: "How does it work?" }, TALK],
+  },
+
+  /* ---- about us ---- */
+  company: {
+    answer:
+      "iSofton is an independent software team working out of Mumbai and Surat, building apps, websites and AI for founders and operators.",
+    next: [
+      { id: "where", label: "Where are you based?" },
+      { id: "work", label: "Can I see your work?" },
+      { id: "services", label: "What do you build?" },
+    ],
+    link: { href: "/about", label: "About us" },
+  },
+  where: {
+    answer:
+      "Mumbai and Surat, working with clients across India, the US and Canada — on whichever hours suit you.",
+    next: [{ id: "work", label: "Can I see your work?" }, TALK],
+    link: { href: "/contact", label: "Contact" },
+  },
+  work: {
+    answer:
+      "Yes — there are example products on the work page: an ERP-style operations tool, a subscription platform and an offline-first field app.",
+    next: [{ id: "project", label: "I have a project in mind" }, TALK],
+    link: { href: "/work", label: "See the work" },
+  },
+
   human: {
     answer:
       "Easiest on WhatsApp — the team picks it up directly, usually within a day. Anything you typed here comes along with the message.",
-    next: [],
+    next: [BACK],
   },
 };
 
@@ -296,17 +414,31 @@ export function ChatWidget() {
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-label={open ? "Close chat" : "Open chat"}
-            className="flex h-[3.25rem] items-center gap-2 rounded-full bg-[#6f5b9a] px-5 text-sm font-medium text-white shadow-lift transition hover:bg-[#5d4b86]"
+            className="flex h-14 items-center gap-2.5 rounded-full bg-[#6f5b9a] pl-4 pr-5 text-sm font-medium text-white shadow-lift transition hover:bg-[#5d4b86]"
           >
-            <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden>
-              <path
-                d="M20 12a7.5 7.5 0 0 1-10.9 6.7L4 20l1.4-4.2A7.5 7.5 0 1 1 20 12z"
-                stroke="currentColor"
-                strokeWidth="1.7"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="hidden sm:inline">{open ? "Close" : "Chat"}</span>
+            {open ? (
+              <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
+                <path
+                  d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.7 8.7 0 0 1-3.8-.9L3 21l1.9-5.1A8.4 8.4 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.5 8.5 0 0 1 21 11.5z"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinejoin="round"
+                />
+                <circle cx="9" cy="11.5" r="1.15" fill="currentColor" />
+                <circle cx="12.5" cy="11.5" r="1.15" fill="currentColor" />
+                <circle cx="16" cy="11.5" r="1.15" fill="currentColor" />
+              </svg>
+            )}
+            <span>{open ? "Close" : "Chat"}</span>
           </button>
         </div>
       </div>

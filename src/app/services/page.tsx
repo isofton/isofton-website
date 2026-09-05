@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { CardGrid } from "@/components/CardGrid";
+import { CardRail } from "@/components/CardRail";
 import { NotchCard } from "@/components/NotchCard";
 import { Reveal } from "@/components/Reveal";
 import { Shapes } from "@/components/Shapes";
@@ -98,7 +100,7 @@ export default function ServicesPage() {
     <PageShell>
       <section className="relative overflow-hidden">
         <Shapes variant="hero" />
-        <Container className="relative py-20 sm:py-24">
+        <Container className="relative py-12 sm:py-20 md:py-24">
           <Reveal>
             <p className="text-sm font-medium text-lavender-deep">Our services</p>
             <h1 className="mt-3 max-w-3xl font-display text-4xl font-medium leading-tight sm:text-5xl">
@@ -111,16 +113,16 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <section className="relative overflow-hidden py-14">
+      <section className="relative overflow-hidden py-10 sm:py-14">
         <Shapes />
         <Container className="relative">
           <Reveal>
             <p className="text-sm font-medium text-lavender-deep">What we offer</p>
-            <h2 className="mt-2 max-w-2xl font-display text-3xl font-medium sm:text-4xl">
+            <h2 className="mt-2 max-w-2xl font-display text-[26px] font-medium sm:text-4xl">
               Four ways we show up on a project.
             </h2>
           </Reveal>
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
+          <CardGrid cols={2}>
             {offers.map((item, index) => (
               <Reveal key={item.title} delay={index * 80}>
                 <article className="soft-card h-full rounded-[24px] p-6">
@@ -129,36 +131,38 @@ export default function ServicesPage() {
                 </article>
               </Reveal>
             ))}
-          </div>
+          </CardGrid>
         </Container>
       </section>
 
-      <section className="relative overflow-hidden py-14">
+      <section className="relative overflow-hidden py-10 sm:py-14">
         <Container className="relative">
           <Reveal>
             <p className="text-sm font-medium text-lavender-deep">Practices</p>
-            <h2 className="mt-2 font-display text-3xl font-medium sm:text-4xl">What we take on</h2>
+            <h2 className="mt-2 font-display text-[26px] font-medium sm:text-4xl">What we take on</h2>
           </Reveal>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10">
+            <CardRail ariaLabel="practices" perView={3}>
             {services.map((service, index) => (
               <Reveal key={service.slug} delay={index * 60}>
-                <NotchCard href={`/services/${service.slug}`} src={service.image} alt={service.title} title={service.title} subtitle={service.short} height="h-60" sizes="(min-width: 1024px) 33vw, 50vw" />
+                <NotchCard href={`/services/${service.slug}`} src={service.image} alt={service.title} title={service.title} subtitle={service.short} height="h-48 sm:h-60" sizes="(min-width: 1024px) 33vw, 50vw" />
               </Reveal>
             ))}
+            </CardRail>
           </div>
         </Container>
       </section>
 
-      <section className="relative overflow-hidden py-14">
+      <section className="relative overflow-hidden py-10 sm:py-14">
         <Shapes />
         <Container className="relative">
           <Reveal>
             <p className="text-sm font-medium text-lavender-deep">How we work</p>
-            <h2 className="mt-2 max-w-2xl font-display text-3xl font-medium sm:text-4xl">
+            <h2 className="mt-2 max-w-2xl font-display text-[26px] font-medium sm:text-4xl">
               Transparent, close, and on a date you can point to.
             </h2>
           </Reveal>
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <CardGrid cols={4}>
             {qualities.map((item, index) => (
               <Reveal key={item.title} delay={index * 70}>
                 <article className="soft-card h-full rounded-[24px] p-5">
@@ -167,16 +171,16 @@ export default function ServicesPage() {
                 </article>
               </Reveal>
             ))}
-          </div>
+          </CardGrid>
         </Container>
       </section>
 
-      <section className="relative overflow-hidden py-16">
+      <section className="relative overflow-hidden py-12 sm:py-16">
         <Shapes variant="process" />
         <Container className="relative">
           <Reveal>
             <p className="text-sm font-medium text-lavender-deep">Our process</p>
-            <h2 className="mt-2 max-w-2xl font-display text-3xl font-medium sm:text-4xl">
+            <h2 className="mt-2 max-w-2xl font-display text-[26px] font-medium sm:text-4xl">
               A clear path from idea to live.
             </h2>
             <p className="mt-4 max-w-2xl text-ink-soft">
@@ -208,16 +212,16 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      <section className="relative overflow-hidden py-14">
+      <section className="relative overflow-hidden py-10 sm:py-14">
         <Shapes />
         <Container className="relative">
           <Reveal>
             <p className="text-sm font-medium text-lavender-deep">What happens next</p>
-            <h2 className="mt-2 font-display text-3xl font-medium sm:text-4xl">
+            <h2 className="mt-2 font-display text-[26px] font-medium sm:text-4xl">
               After we start, this is what you should see.
             </h2>
           </Reveal>
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <CardGrid cols={4}>
             {nextSteps.map((item, index) => (
               <Reveal key={item.title} delay={index * 80}>
                 <article className="soft-card h-full rounded-[24px] p-5">
@@ -227,7 +231,7 @@ export default function ServicesPage() {
                 </article>
               </Reveal>
             ))}
-          </div>
+          </CardGrid>
           <Reveal delay={120}>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <p className="max-w-xl text-ink-soft">

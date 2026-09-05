@@ -32,7 +32,7 @@ export default function EngagementPage() {
         lead="You see the work. You click a build. You know who is responsible."
       />
       <section>
-        <Container className="grid items-start gap-6 py-14 lg:grid-cols-2">
+        <Container className="grid items-start gap-6 py-10 sm:py-14 lg:grid-cols-2">
           <PhotoTile src="/images/photos/process-board.jpg" alt="A planning board during a project" tone="lavender" className="h-80 rounded-[28px]" sizes="(min-width: 1024px) 50vw, 100vw" />
           <div className="space-y-4">
             {steps.map((step) => (

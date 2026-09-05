@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PhotoTile } from "@/components/BrandTile";
+import { CardGrid } from "@/components/CardGrid";
 import { NotchCard } from "@/components/NotchCard";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -79,7 +80,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         </Container>
       </section>
 
-      <section className="relative py-14 lg:py-20">
+      <section className="relative py-10 sm:py-14 lg:py-20">
         <Container className="grid gap-5 lg:grid-cols-2 xl:gap-6">
           <Reveal className="h-full">
             <div className="soft-card h-full rounded-[28px] p-7">
@@ -117,15 +118,16 @@ export default async function ServiceDetailPage({ params }: Props) {
         </Container>
       </section>
 
-      <section className="relative py-14 lg:py-20">
+      <section className="relative py-10 sm:py-14 lg:py-20">
         <Container>
           <Reveal>
             <p className="text-sm font-medium text-lavender-deep">How this one runs</p>
-            <h2 className="mt-2 max-w-2xl font-display text-3xl font-medium sm:text-4xl xl:text-[42px]">
+            <h2 className="mt-2 max-w-2xl font-display text-[26px] font-medium sm:text-4xl xl:text-[42px]">
               Three phases, and you are in all of them.
             </h2>
           </Reveal>
-          <div className="mt-10 grid gap-5 md:grid-cols-3 xl:gap-6">
+          <div className="mt-10">
+            <CardGrid cols={3}>
             {service.phases.map((phase, index) => (
               <Reveal key={phase.title} className="h-full" delay={index * 80}>
                 <article className="soft-card h-full rounded-[24px] p-6">
@@ -137,15 +139,16 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </article>
               </Reveal>
             ))}
+            </CardGrid>
           </div>
         </Container>
       </section>
 
-      <section className="relative py-14 lg:py-20">
+      <section className="relative py-10 sm:py-14 lg:py-20">
         <Container className="grid gap-10 lg:grid-cols-2 lg:gap-14">
           <Reveal>
             <p className="text-sm font-medium text-lavender-deep">Good fit</p>
-            <h2 className="mt-2 font-display text-3xl font-medium sm:text-4xl xl:text-[42px]">
+            <h2 className="mt-2 font-display text-[26px] font-medium sm:text-4xl xl:text-[42px]">
               This is for you if…
             </h2>
             <ul className="mt-8 space-y-4">
@@ -185,13 +188,13 @@ export default async function ServiceDetailPage({ params }: Props) {
         </Container>
       </section>
 
-      <section className="relative py-14 lg:py-20">
+      <section className="relative py-10 sm:py-14 lg:py-20">
         <Container>
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="text-sm font-medium text-lavender-deep">Pairs well with</p>
-                <h2 className="mt-2 font-display text-3xl font-medium sm:text-4xl xl:text-[42px]">
+                <h2 className="mt-2 font-display text-[26px] font-medium sm:text-4xl xl:text-[42px]">
                   Other practices
                 </h2>
               </div>
@@ -209,7 +212,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   alt={item.title}
                   title={item.title}
                   subtitle={item.short}
-                  height="h-56"
+                  height="h-44 sm:h-56"
                   sizes="(min-width: 1024px) 33vw, 50vw"
                 />
               </Reveal>

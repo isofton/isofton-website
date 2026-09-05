@@ -180,7 +180,7 @@ export function HeroVisual() {
 
       <div className="overflow-hidden rounded-[26px] border border-white/80 bg-white/90 shadow-lift backdrop-blur-xl">
         {/* Header */}
-        <div className="flex items-center justify-between gap-3 px-5 pt-5 sm:px-6 sm:pt-6">
+        <div className="flex items-center justify-between gap-2 px-4 pt-4 sm:px-6 sm:pt-6">
           <p className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-ink-muted">
             <RobotMark className="h-5 w-5 text-lavender-deep" />
             Software <span className="text-lavender-deep">+</span> AI
@@ -197,7 +197,7 @@ export function HeroVisual() {
                 role="tab"
                 aria-selected={index === active}
                 onClick={() => setActive(index)}
-                className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${
+                className={`rounded-full px-2.5 py-1.5 text-[11px] font-medium transition sm:px-3 sm:text-xs ${
                   index === active ? "bg-white text-ink shadow-sm" : "text-ink-muted hover:text-ink"
                 }`}
               >
@@ -208,7 +208,7 @@ export function HeroVisual() {
         </div>
 
         {/* Photo with glass overlays */}
-        <div className="relative mx-5 mt-4 h-56 overflow-hidden rounded-[20px] bg-[#f1eef8] sm:mx-6 sm:h-64">
+        <div className="relative mx-4 mt-3.5 h-44 overflow-hidden rounded-[18px] bg-[#f1eef8] sm:mx-6 sm:mt-4 sm:h-64 sm:rounded-[20px]">
           {products.map((item, index) => (
             <Image
               key={item.id}
@@ -255,7 +255,7 @@ export function HeroVisual() {
         </div>
 
         {/* Copy */}
-        <div key={`copy-${product.id}`} className="hero-fade px-5 pt-4 sm:px-6">
+        <div key={`copy-${product.id}`} className="hero-fade px-4 pt-3.5 sm:px-6 sm:pt-4">
           <p className="font-display text-base font-medium leading-snug text-ink sm:text-lg">
             {product.title}
           </p>
@@ -270,7 +270,7 @@ export function HeroVisual() {
         </div>
 
         {/* Footer */}
-        <div className="mt-4 flex items-center justify-between gap-4 border-t border-[#eee9f6] px-5 py-4 sm:px-6">
+        <div className="mt-3.5 flex items-center justify-between gap-3 border-t border-[#eee9f6] px-4 py-3.5 sm:mt-4 sm:px-6 sm:py-4">
           <div>
             <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-ink-muted">
               Your goal

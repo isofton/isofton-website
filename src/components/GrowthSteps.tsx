@@ -47,12 +47,32 @@ const lift = ["lg:mt-16", "lg:mt-11", "lg:mt-6", "lg:mt-0"];
 
 export function GrowthSteps() {
   return (
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:items-end xl:gap-6">
+    <div className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 sm:-mx-6 sm:px-6 md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4 lg:items-end xl:gap-6">
       {stages.map((stage, index) => (
-        <Reveal key={stage.title} className={`h-full ${lift[index]}`} delay={index * 90}>
+        <Reveal
+          key={stage.title}
+          className={`relative w-full shrink-0 snap-center sm:w-[55%] sm:snap-start md:w-auto ${lift[index]}`}
+          delay={index * 90}
+        >
+          {index < stages.length - 1 && (
+            <span
+              className="absolute -right-[18px] top-[68px] z-10 hidden h-8 w-8 items-center justify-center rounded-full border border-[#e6dff3] bg-white text-lavender-deep shadow-sm lg:flex"
+              aria-hidden
+            >
+              <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4">
+                <path
+                  d="M5 12h13M12 5l7 7-7 7"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+          )}
           <article className="soft-card flex h-full flex-col overflow-hidden rounded-[24px]">
-            <BrandTile icon={stage.icon} tone={stage.tone} className="h-32" />
-            <div className="flex flex-1 flex-col p-6">
+            <BrandTile icon={stage.icon} tone={stage.tone} className="h-28 sm:h-32" />
+            <div className="flex flex-1 flex-col p-5 sm:p-6">
             <div className="flex items-center gap-1.5" aria-hidden>
               {stages.map((_, bar) => (
                 <span

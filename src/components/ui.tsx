@@ -39,7 +39,7 @@ export function PageHero({
 }) {
   return (
     <section className="relative">
-      <Container className="relative py-16 sm:py-20">
+      <Container className="relative py-12 sm:py-20">
         <p className="text-sm font-medium text-lavender-deep">{eyebrow}</p>
         <h1 className="mt-3 max-w-3xl font-display text-4xl font-medium leading-tight text-ink sm:text-5xl">
           {title}
