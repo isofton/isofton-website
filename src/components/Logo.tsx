@@ -15,7 +15,7 @@ export function Logo({ compact = false, tone = "light" }: LogoProps) {
         alt="iSofton Software Solutions"
         width={300}
         height={99}
-        className={compact ? "h-8 w-auto sm:h-9" : "h-10 w-auto sm:h-11"}
+        className={compact ? "h-10 w-auto sm:h-11 lg:h-12" : "h-12 w-auto sm:h-14"}
         priority
       />
     </Link>

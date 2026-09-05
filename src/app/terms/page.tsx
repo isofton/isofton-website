@@ -26,7 +26,7 @@ export default function TermsPage() {
               without permission. Case studies describe typical outcomes; they are not a guarantee of
               the same result for every client.
             </p>
-            <p>Questions: hello@isofton.com.</p>
+            <p>Questions: contact@isofton.com.</p>
           </div>
         </Container>
       </section>

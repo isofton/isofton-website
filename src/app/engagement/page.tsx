@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { PhotoTile } from "@/components/BrandTile";
 import { Container, CtaBand, PageHero, PageShell } from "@/components/ui";
 import { steps } from "@/lib/data";
 
@@ -33,15 +33,7 @@ export default function EngagementPage() {
       />
       <section>
         <Container className="grid items-start gap-6 py-14 lg:grid-cols-2">
-          <div className="soft-card relative h-80 overflow-hidden rounded-[28px]">
-            <Image
-              src="/images/process-board.jpg"
-              alt="Planning board"
-              fill
-              className="object-cover"
-              sizes="50vw"
-            />
-          </div>
+          <PhotoTile src="/images/photos/process-board.jpg" alt="A planning board during a project" tone="lavender" className="h-80 rounded-[28px]" sizes="(min-width: 1024px) 50vw, 100vw" />
           <div className="space-y-4">
             {steps.map((step) => (
               <article key={step.n} className="soft-card rounded-[24px] p-5">

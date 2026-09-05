@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
+import { NotchCard } from "@/components/NotchCard";
 import { Reveal } from "@/components/Reveal";
-import { Shapes, StepArrow } from "@/components/Shapes";
+import { Shapes } from "@/components/Shapes";
 import { ButtonLink, Container, CtaBand, PageShell } from "@/components/ui";
 import { services } from "@/lib/data";
 
@@ -143,24 +142,7 @@ export default function ServicesPage() {
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service, index) => (
               <Reveal key={service.slug} delay={index * 60}>
-                <Link href={`/services/${service.slug}`} className="soft-card group block overflow-hidden rounded-[24px]">
-                  <div className="relative h-40 overflow-hidden">
-                    <Image
-                      src={service.image}
-                      alt=""
-                      fill
-                      className="object-cover transition duration-500 group-hover:scale-[1.04]"
-                      sizes="(min-width: 1024px) 33vw, 50vw"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-display text-lg font-medium">{service.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-ink-soft">{service.short}</p>
-                    <span className="mt-4 inline-block text-sm font-medium text-lavender-deep">
-                      See the practice →
-                    </span>
-                  </div>
-                </Link>
+                <NotchCard href={`/services/${service.slug}`} src={service.image} alt={service.title} title={service.title} subtitle={service.short} height="h-60" sizes="(min-width: 1024px) 33vw, 50vw" />
               </Reveal>
             ))}
           </div>
@@ -201,23 +183,25 @@ export default function ServicesPage() {
               You are in the work at every stage. Launch is a milestone — not the last time we talk.
             </p>
           </Reveal>
-          <ol className="mt-12">
+          <ol className="relative mt-12 pl-10 sm:pl-14">
+            <span
+              className="absolute bottom-6 left-[15px] top-3 w-px bg-gradient-to-b from-[#d8ccec] via-[#d8ccec] to-transparent sm:left-[19px]"
+              aria-hidden
+            />
             {process.map((step, index) => (
-              <li key={step.n}>
-                <Reveal delay={40}>
-                  <article
-                    className={`soft-card max-w-xl rounded-[24px] p-6 ${
-                      index % 2 ? "ml-auto" : ""
-                    }`}
-                  >
-                    <p className="font-display text-sm font-medium text-lavender-deep">{step.n}</p>
-                    <h3 className="mt-2 font-display text-2xl font-medium">{step.title}</h3>
+              <li key={step.n} className="relative pb-6 last:pb-0">
+                <span
+                  className="absolute -left-10 top-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#e0d6f2] bg-white font-display text-xs font-medium text-lavender-deep shadow-sm sm:-left-14 sm:h-10 sm:w-10 sm:text-sm"
+                  aria-hidden
+                >
+                  {step.n}
+                </span>
+                <Reveal delay={index * 60}>
+                  <article className="soft-card rounded-[24px] p-6">
+                    <h3 className="font-display text-xl font-medium sm:text-2xl">{step.title}</h3>
                     <p className="mt-2 text-sm leading-7 text-ink-soft">{step.body}</p>
                   </article>
                 </Reveal>
-                {index < process.length - 1 && (
-                  <StepArrow direction={index % 2 === 0 ? "right" : "left"} />
-                )}
               </li>
             ))}
           </ol>

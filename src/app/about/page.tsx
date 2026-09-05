@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Container, CtaBand, Frame, PageHero, PageShell } from "@/components/ui";
+import { PhotoTile } from "@/components/BrandTile";
+import { Container, CtaBand, PageHero, PageShell } from "@/components/ui";
 import { clients, values } from "@/lib/data";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "iSofton is a software studio in Mumbai and Surat.",
+  description: "iSofton is an independent software team in Mumbai and Surat.",
 };
 
 const beliefs = [
@@ -33,12 +34,12 @@ export default function AboutPage() {
     <PageShell>
       <PageHero
         eyebrow="About"
-        title="A studio that still answers the phone."
+        title="A small team that still answers the phone."
         lead="iSofton builds custom software — websites, apps, and AI systems — from Mumbai and Surat."
       />
       <section>
         <Container className="grid items-center gap-10 py-14 lg:grid-cols-2">
-          <Frame src="/images/about-collab.jpg" alt="Working session" className="h-[360px]" />
+          <PhotoTile src="/images/photos/team-collab.jpg" alt="The iSofton team working together" tone="lavender" className="h-[320px] rounded-[28px]" sizes="(min-width: 1024px) 50vw, 100vw" />
           <div>
             <h2 className="font-display text-3xl font-medium">How we work as a company</h2>
             <p className="mt-4 leading-7 text-ink-soft">
@@ -83,8 +84,14 @@ export default function AboutPage() {
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {clients.map((client) => (
               <li key={client.name} className="soft-card flex items-center gap-4 rounded-[24px] px-5 py-5">
-                <div className="relative h-12 w-28 shrink-0">
-                  <Image src={client.logo} alt="" fill className="object-contain object-left" sizes="112px" />
+                <div className="relative flex h-12 w-28 shrink-0 items-center">
+                  {client.logo ? (
+                    <Image src={client.logo} alt="" fill className="object-contain object-left" sizes="112px" />
+                  ) : (
+                    <span className="font-display text-base font-semibold tracking-tight text-ink-soft">
+                      {client.name}
+                    </span>
+                  )}
                 </div>
                 <div>
                   <p className="font-display font-medium">{client.name}</p>
@@ -99,11 +106,7 @@ export default function AboutPage() {
         <Container className="grid gap-6 py-14 md:grid-cols-2">
           {site.locations.map((location) => (
             <article key={location.city} className="soft-card overflow-hidden rounded-[28px]">
-              <Frame
-                src={location.city === "Mumbai" ? "/images/city-mumbai.jpg" : "/images/city-surat.jpg"}
-                alt={location.city}
-                className="h-56 rounded-none"
-              />
+              <PhotoTile src={location.city === "Mumbai" ? "/images/photos/city-mumbai.jpg" : "/images/photos/city-surat.jpg"} alt={location.city} tone={location.city === "Mumbai" ? "cyan" : "coral"} className="h-48" sizes="(min-width: 768px) 50vw, 100vw" />
               <div className="p-5">
                 <p className="text-sm text-ink-muted">{location.note}</p>
                 <h3 className="mt-1 font-display text-2xl font-medium">{location.city}</h3>

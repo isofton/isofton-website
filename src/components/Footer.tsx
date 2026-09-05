@@ -10,7 +10,7 @@ export function Footer() {
         <div>
           <Logo tone="dark" />
           <p className="mt-4 max-w-xs text-sm leading-6 text-white/60">
-            Software studio in Mumbai and Surat. Apps, web, and applied AI.
+            Independent software team in Mumbai and Surat. Apps, web, and applied AI.
           </p>
         </div>
         <div>
@@ -63,9 +63,17 @@ export function Footer() {
                 {site.email}
               </a>
             </li>
-            {site.locations.map((location) => (
-              <li key={location.city}>
-                {location.city}
+            {site.phones.map((phone) => (
+              <li key={phone.e164}>
+                <a
+                  href={`https://wa.me/${phone.e164}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 hover:text-white"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#25d366]" aria-hidden />
+                  {phone.city} on WhatsApp
+                </a>
               </li>
             ))}
           </ul>

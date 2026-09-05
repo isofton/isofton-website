@@ -13,7 +13,7 @@ export default function FaqPage() {
       <PageHero
         eyebrow="FAQ"
         title="Questions we hear on first calls."
-        lead="If yours is not here, write to hello@isofton.com."
+        lead="If yours is not here, write to contact@isofton.com."
       />
       <section>
         <Container className="space-y-4 py-14">

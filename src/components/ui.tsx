@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { type ReactNode } from "react";
 import { SoftBg } from "@/components/SoftBg";
@@ -19,7 +18,13 @@ export function Container({
   children: ReactNode;
   className?: string;
 }) {
-  return <div className={`mx-auto w-full max-w-6xl px-4 sm:px-6 ${className}`}>{children}</div>;
+  return (
+    <div
+      className={`mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 xl:max-w-[1240px] 2xl:max-w-[1400px] ${className}`}
+    >
+      {children}
+    </div>
+  );
 }
 
 export function PageHero({
@@ -87,10 +92,10 @@ export function CtaBand() {
         <div className="flex flex-wrap gap-3 lg:justify-end">
           <ButtonLink href="/contact">Book a call</ButtonLink>
           <a
-            href="mailto:hello@isofton.com"
+            href="mailto:contact@isofton.com"
             className="inline-flex items-center text-sm text-ink-soft hover:text-ink"
           >
-            hello@isofton.com
+            contact@isofton.com
           </a>
         </div>
       </Container>
@@ -98,27 +103,3 @@ export function CtaBand() {
   );
 }
 
-export function Frame({
-  src,
-  alt,
-  className = "",
-  priority = false,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  priority?: boolean;
-}) {
-  return (
-    <div className={`relative overflow-hidden rounded-[28px] bg-white/50 ${className}`}>
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        priority={priority}
-        className="object-cover"
-        sizes="(min-width: 1024px) 50vw, 100vw"
-      />
-    </div>
-  );
-}

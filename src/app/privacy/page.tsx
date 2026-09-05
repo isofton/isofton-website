@@ -26,7 +26,7 @@ export default function PrivacyPage() {
               We do not sell contact details. We do not run advertising pixels on this site. Hosting
               and email providers may process data as needed to deliver the service.
             </p>
-            <p>To ask what we hold or to request deletion, write to hello@isofton.com.</p>
+            <p>To ask what we hold or to request deletion, write to contact@isofton.com.</p>
           </div>
         </Container>
       </section>
