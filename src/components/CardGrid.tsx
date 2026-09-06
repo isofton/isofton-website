@@ -3,15 +3,19 @@
 import { Children, type ReactNode, useEffect, useRef, useState } from "react";
 
 /**
- * Cards that swipe one-per-screen on phones with dots underneath, and lay out
- * as a grid from md up — so a four-card section costs one screen on mobile.
+ * One full-width card on phones with optional tabs + dots; grid from md up.
  */
 export function CardGrid({
   children,
   cols = 3,
+  tabs,
+  ariaLabel = "Cards",
 }: {
   children: ReactNode;
   cols?: 2 | 3 | 4;
+  /** Short labels for mobile tabs (same length as children). */
+  tabs?: string[];
+  ariaLabel?: string;
 }) {
   const items = Children.toArray(children);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -30,10 +34,9 @@ export function CardGrid({
     const onScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        const card = node.firstElementChild as HTMLElement | null;
-        if (!card) return;
-        const step = card.offsetWidth + 16;
-        setActive(Math.round(node.scrollLeft / step));
+        const width = node.clientWidth;
+        if (!width) return;
+        setActive(Math.round(node.scrollLeft / width));
       });
     };
     node.addEventListener("scroll", onScroll, { passive: true });
@@ -45,26 +48,60 @@ export function CardGrid({
 
   const goTo = (index: number) => {
     const node = trackRef.current;
-    const card = node?.firstElementChild as HTMLElement | null;
-    if (!node || !card) return;
-    node.scrollTo({ left: index * (card.offsetWidth + 16), behavior: "smooth" });
+    if (!node) return;
+    node.scrollTo({ left: index * node.clientWidth, behavior: "smooth" });
+    setActive(index);
   };
 
+  const showTabs = tabs && tabs.length === items.length;
+
   return (
-    <div>
+    <div className="min-w-0 w-full">
+      {showTabs && (
+        <div
+          className="mb-5 grid gap-1.5 rounded-2xl border border-[#ebe4f4] bg-white/80 p-1.5 md:hidden"
+          style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
+          role="tablist"
+          aria-label={ariaLabel}
+        >
+          {tabs.map((label, index) => {
+            const selected = index === active;
+            return (
+              <button
+                key={label}
+                type="button"
+                role="tab"
+                aria-selected={selected}
+                onClick={() => goTo(index)}
+                className={`rounded-xl px-1 py-2.5 text-center text-[12px] leading-tight transition sm:text-sm ${
+                  selected
+                    ? "bg-[#6f5b9a] font-medium text-white shadow-sm"
+                    : "text-ink-soft"
+                }`}
+              >
+                <span className="block text-[10px] opacity-70">{index + 1}</span>
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       <div
         ref={trackRef}
-        className={`no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 md:mx-0 md:grid md:gap-5 md:overflow-visible md:px-0 md:pb-0 xl:gap-6 ${grid}`}
+        className={`no-scrollbar flex w-full min-w-0 snap-x snap-mandatory overflow-x-auto overscroll-x-contain scroll-smooth md:grid md:gap-5 md:overflow-visible xl:gap-6 ${grid}`}
+        role="region"
+        aria-label={ariaLabel}
       >
         {items.map((child, index) => (
-          <div key={index} className="w-full shrink-0 snap-center md:w-auto">
+          <div key={index} className="w-full min-w-full shrink-0 snap-start md:min-w-0 md:w-auto">
             {child}
           </div>
         ))}
       </div>
 
       {items.length > 1 && (
-        <div className="mt-4 flex justify-center gap-2 md:hidden">
+        <div className="mt-5 flex justify-center gap-2 md:hidden">
           {items.map((_, index) => (
             <button
               key={index}

@@ -187,21 +187,21 @@ export default function ServicesPage() {
               You are in the work at every stage. Launch is a milestone — not the last time we talk.
             </p>
           </Reveal>
-          <ol className="relative mt-12 pl-10 sm:pl-14">
+          <ol className="relative mt-12 pl-11 sm:pl-14">
             <span
-              className="absolute bottom-6 left-[15px] top-3 w-px bg-gradient-to-b from-[#d8ccec] via-[#d8ccec] to-transparent sm:left-[19px]"
+              className="absolute bottom-6 left-[17px] top-3 w-px bg-gradient-to-b from-[#d8ccec] via-[#d8ccec] to-transparent sm:left-[19px]"
               aria-hidden
             />
             {process.map((step, index) => (
               <li key={step.n} className="relative pb-6 last:pb-0">
                 <span
-                  className="absolute -left-10 top-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#e0d6f2] bg-white font-display text-xs font-medium text-lavender-deep shadow-sm sm:-left-14 sm:h-10 sm:w-10 sm:text-sm"
+                  className="absolute -left-11 top-1 flex h-8 w-8 items-center justify-center rounded-full border border-[#e0d6f2] bg-white font-display text-xs font-medium text-lavender-deep shadow-sm sm:-left-14 sm:h-10 sm:w-10 sm:text-sm"
                   aria-hidden
                 >
                   {step.n}
                 </span>
                 <Reveal delay={index * 60}>
-                  <article className="soft-card rounded-[24px] p-6">
+                  <article className="soft-card rounded-[24px] p-5 sm:p-6">
                     <h3 className="font-display text-xl font-medium sm:text-2xl">{step.title}</h3>
                     <p className="mt-2 text-sm leading-7 text-ink-soft">{step.body}</p>
                   </article>

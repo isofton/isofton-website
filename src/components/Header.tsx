@@ -21,6 +21,15 @@ export function Header() {
   }, [pathname]);
 
   useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
+  useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setMenu(false);
@@ -44,7 +53,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/60 bg-white/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/60 bg-white/80 backdrop-blur-xl pt-[env(safe-area-inset-top)]">
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8 xl:max-w-[1240px] 2xl:max-w-[1400px]">
         <Logo compact />
 
@@ -170,7 +179,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-[#efe8f6] bg-white px-4 py-4 lg:hidden">
+        <div className="max-h-[calc(100dvh-5rem-env(safe-area-inset-top))] overflow-y-auto overscroll-contain border-t border-[#efe8f6] bg-white px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:hidden">
           <nav className="flex flex-col" aria-label="Mobile">
             <div className="border-b border-[#f1ecf8]">
               <button

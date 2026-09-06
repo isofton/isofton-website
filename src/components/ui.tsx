@@ -1,14 +1,8 @@
 import Link from "next/link";
 import { type ReactNode } from "react";
-import { SoftBg } from "@/components/SoftBg";
 
 export function PageShell({ children }: { children: ReactNode }) {
-  return (
-    <div className="relative bg-mesh">
-      <SoftBg />
-      <div className="relative">{children}</div>
-    </div>
-  );
+  return <div className="relative w-full min-w-0 max-w-full">{children}</div>;
 }
 
 export function Container({
@@ -20,7 +14,7 @@ export function Container({
 }) {
   return (
     <div
-      className={`mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 xl:max-w-[1240px] 2xl:max-w-[1400px] ${className}`}
+      className={`mx-auto w-full min-w-0 max-w-6xl px-4 sm:px-6 lg:px-8 xl:max-w-[1240px] 2xl:max-w-[1400px] ${className}`}
     >
       {children}
     </div>
@@ -61,14 +55,14 @@ export function ButtonLink({
 }) {
   const styles = {
     primary: "bg-[#6f5b9a] text-white hover:bg-[#5d4b86]",
-    ghost: "border border-[#d8ccec] bg-white/70 text-ink hover:bg-white",
-    light: "bg-white/90 text-ink hover:bg-white",
+    ghost: "bg-white text-ink ring-1 ring-[#e4dcf0] hover:bg-[#faf8fd]",
+    light: "bg-white text-ink hover:bg-[#faf8fd]",
   }[variant];
 
   return (
     <Link
       href={href}
-      className={`inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium transition ${styles}`}
+      className={`inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition sm:px-6 ${styles}`}
     >
       {children}
     </Link>

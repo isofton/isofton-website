@@ -225,6 +225,7 @@ export function ChatWidget() {
   const threadRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const nextId = useRef(1);
+  const scrollLockY = useRef(0);
 
   useEffect(() => {
     if (!open) return;
@@ -236,7 +237,36 @@ export function ChatWidget() {
   }, [open]);
 
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (!open) return;
+    // iOS-safe scroll lock — overflow:hidden alone often fails on mobile Safari
+    scrollLockY.current = window.scrollY;
+    const { body, documentElement } = document;
+    const previous = {
+      overflow: body.style.overflow,
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+      htmlOverflow: documentElement.style.overflow,
+    };
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollLockY.current}px`;
+    body.style.width = "100%";
+    documentElement.style.overflow = "hidden";
+    return () => {
+      body.style.overflow = previous.overflow;
+      body.style.position = previous.position;
+      body.style.top = previous.top;
+      body.style.width = previous.width;
+      documentElement.style.overflow = previous.htmlOverflow;
+      window.scrollTo(0, scrollLockY.current);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (finePointer) inputRef.current?.focus();
   }, [open]);
 
   useEffect(() => {
@@ -273,176 +303,204 @@ export function ChatWidget() {
     }, 350);
   };
 
-  return (
+  const close = () => setOpen(false);
+
+  const panel = (
     <>
-      <div className="fixed bottom-5 right-5 z-[60] flex flex-col items-end gap-3 print:hidden">
-        {open && (
-          <div
-            role="dialog"
-            aria-modal="false"
-            aria-label="Chat with iSofton"
-            className="flex h-[min(560px,calc(100vh-8rem))] w-[min(370px,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-[26px] border border-white/70 bg-white shadow-lift"
-          >
-            <div className="flex items-start justify-between gap-3 border-b border-[#f1ecf8] bg-lavender-mist/60 px-5 py-4">
-              <div>
-                <p className="font-display text-base font-medium text-ink">Chat with iSofton</p>
-                <p className="mt-0.5 flex items-center gap-1.5 text-xs text-ink-muted">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#25d366]" aria-hidden />
-                  We reply within a day
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                aria-label="Close chat"
-                className="rounded-full p-1.5 text-ink-muted transition hover:bg-white hover:text-ink"
+      <div className="flex shrink-0 items-start justify-between gap-3 border-b border-[#f1ecf8] bg-lavender-mist/60 px-4 py-3.5 sm:px-5 sm:py-4">
+        <div className="min-w-0">
+          <p className="font-display text-base font-medium text-ink">Chat with iSofton</p>
+          <p className="mt-0.5 flex items-center gap-1.5 text-xs text-ink-muted">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#25d366]" aria-hidden />
+            We reply within a day
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={close}
+          aria-label="Close chat"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink-muted transition hover:bg-white hover:text-ink"
+        >
+          <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden>
+            <path
+              d="M6 6l12 12M18 6L6 18"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div
+        ref={threadRef}
+        className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4 [-webkit-overflow-scrolling:touch]"
+      >
+        {messages.map((message) => (
+          <div key={message.id}>
+            <div
+              className={
+                message.from === "bot"
+                  ? "max-w-[85%] rounded-2xl rounded-tl-md bg-[#f4f2f9] px-4 py-2.5 text-sm leading-6 text-ink-soft"
+                  : "ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-[#6f5b9a] px-4 py-2.5 text-sm leading-6 text-white"
+              }
+            >
+              {message.text}
+            </div>
+
+            {message.link && (
+              <Link
+                href={message.link.href}
+                onClick={close}
+                className="mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-full border border-[#e4dcf0] bg-white px-3 py-1.5 text-xs font-medium text-lavender-deep transition hover:bg-lavender-mist"
               >
-                <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden>
-                  <path
-                    d="M6 6l12 12M18 6L6 18"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-            </div>
+                {message.link.label}
+                <span aria-hidden>→</span>
+              </Link>
+            )}
 
-            <div ref={threadRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
-              {messages.map((message) => (
-                <div key={message.id}>
-                  <div
-                    className={
-                      message.from === "bot"
-                        ? "max-w-[85%] rounded-2xl rounded-tl-md bg-[#f4f2f9] px-4 py-2.5 text-sm leading-6 text-ink-soft"
-                        : "ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-[#6f5b9a] px-4 py-2.5 text-sm leading-6 text-white"
-                    }
+            {message.replies && message.replies.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-2">
+                {message.replies.map((reply) => (
+                  <button
+                    key={reply.id}
+                    type="button"
+                    onClick={() => ask(reply)}
+                    className="min-h-9 rounded-full border border-[#e4dcf0] bg-white px-3 py-2 text-xs text-ink-soft transition hover:border-[#d8ccec] hover:text-ink"
                   >
-                    {message.text}
-                  </div>
-
-                  {message.link && (
-                    <Link
-                      href={message.link.href}
-                      onClick={() => setOpen(false)}
-                      className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-[#e4dcf0] bg-white px-3 py-1.5 text-xs font-medium text-lavender-deep transition hover:bg-lavender-mist"
-                    >
-                      {message.link.label}
-                      <span aria-hidden>→</span>
-                    </Link>
-                  )}
-
-                  {message.replies && message.replies.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {message.replies.map((reply) => (
-                        <button
-                          key={reply.id}
-                          type="button"
-                          onClick={() => ask(reply)}
-                          className="rounded-full border border-[#e4dcf0] bg-white px-3 py-1.5 text-xs text-ink-soft transition hover:border-[#d8ccec] hover:text-ink"
-                        >
-                          {reply.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <div className="border-t border-[#f1ecf8] bg-white px-4 py-3">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-ink-muted">
-                Continue on WhatsApp
-              </p>
-              <div className="mt-2 grid grid-cols-2 gap-2">
-                {site.phones.map((phone) => (
-                  <a
-                    key={phone.e164}
-                    href={waLink(phone.e164, handoff)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 rounded-2xl border border-[#cdeedb] bg-[#eefaf2] px-3.5 py-3 text-sm font-medium text-[#15774a] transition hover:bg-[#e2f6ea]"
-                  >
-                    <WhatsAppIcon className="h-4 w-4" />
-                    {phone.city}
-                  </a>
+                    {reply.label}
+                  </button>
                 ))}
               </div>
-
-              <form onSubmit={send} className="mt-3 flex items-center gap-2">
-                <label htmlFor="chat-message" className="sr-only">
-                  Type a message
-                </label>
-                <input
-                  id="chat-message"
-                  ref={inputRef}
-                  value={draft}
-                  onChange={(event) => setDraft(event.target.value)}
-                  placeholder="Type what you need…"
-                  className="min-w-0 flex-1 rounded-full border border-[#e4dcf0] bg-white px-4 py-2.5 text-sm text-ink outline-none transition placeholder:text-ink-muted focus:border-[#c9b8e6]"
-                />
-                <button
-                  type="submit"
-                  aria-label="Send message"
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#6f5b9a] text-white transition hover:bg-[#5d4b86]"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden>
-                    <path
-                      d="M5 12h13M12 5l7 7-7 7"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </form>
-              <p className="mt-2 text-[11px] leading-4 text-ink-muted">
-                Answers here are canned. A person replies on WhatsApp or at{" "}
-                <a href={`mailto:${site.email}`} className="underline hover:text-ink">
-                  {site.email}
-                </a>
-                .
-              </p>
-            </div>
-          </div>
-        )}
-
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => setOpen((value) => !value)}
-            aria-expanded={open}
-            aria-label={open ? "Close chat" : "Open chat"}
-            className="flex h-14 items-center gap-2.5 rounded-full bg-[#6f5b9a] pl-4 pr-5 text-sm font-medium text-white shadow-lift transition hover:bg-[#5d4b86]"
-          >
-            {open ? (
-              <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
-                <path
-                  d="M6 6l12 12M18 6L6 18"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
-                <path
-                  d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.7 8.7 0 0 1-3.8-.9L3 21l1.9-5.1A8.4 8.4 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.5 8.5 0 0 1 21 11.5z"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinejoin="round"
-                />
-                <circle cx="9" cy="11.5" r="1.15" fill="currentColor" />
-                <circle cx="12.5" cy="11.5" r="1.15" fill="currentColor" />
-                <circle cx="16" cy="11.5" r="1.15" fill="currentColor" />
-              </svg>
             )}
-            <span>{open ? "Close" : "Chat"}</span>
-          </button>
+          </div>
+        ))}
+      </div>
+
+      <div className="shrink-0 border-t border-[#f1ecf8] bg-white px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3">
+        <p className="text-[11px] font-medium uppercase tracking-wide text-ink-muted">
+          Continue on WhatsApp
+        </p>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          {site.phones.map((phone) => (
+            <a
+              key={phone.e164}
+              href={waLink(phone.e164, handoff)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-[#cdeedb] bg-[#eefaf2] px-3.5 py-3 text-sm font-medium text-[#15774a] transition hover:bg-[#e2f6ea]"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              {phone.city}
+            </a>
+          ))}
         </div>
+
+        <form onSubmit={send} className="mt-3 flex items-center gap-2">
+          <label htmlFor="chat-message" className="sr-only">
+            Type a message
+          </label>
+          <input
+            id="chat-message"
+            ref={inputRef}
+            value={draft}
+            onChange={(event) => setDraft(event.target.value)}
+            placeholder="Type what you need…"
+            enterKeyHint="send"
+            autoComplete="off"
+            className="min-w-0 flex-1 rounded-full border border-[#e4dcf0] bg-white px-4 py-2.5 text-base text-ink outline-none transition placeholder:text-ink-muted focus:border-[#c9b8e6] sm:text-sm"
+          />
+          <button
+            type="submit"
+            aria-label="Send message"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#6f5b9a] text-white transition hover:bg-[#5d4b86]"
+          >
+            <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden>
+              <path
+                d="M5 12h13M12 5l7 7-7 7"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </form>
+        <p className="mt-2 text-[11px] leading-4 text-ink-muted">
+          Answers here are canned. A person replies on WhatsApp or at{" "}
+          <a href={`mailto:${site.email}`} className="underline hover:text-ink">
+            {site.email}
+          </a>
+          .
+        </p>
       </div>
     </>
+  );
+
+  return (
+    <div className="print:hidden">
+      {/* FAB — stays visible; toggles open/close */}
+      <div
+        className="fixed z-[62] flex"
+        style={{
+          bottom: "max(1.25rem, env(safe-area-inset-bottom))",
+          right: "max(1.25rem, env(safe-area-inset-right))",
+        }}
+      >
+        <button
+          type="button"
+          onClick={() => setOpen((value) => !value)}
+          aria-expanded={open}
+          aria-label={open ? "Close chat" : "Open chat"}
+          className="flex h-14 items-center gap-2.5 rounded-full bg-[#6f5b9a] pl-4 pr-5 text-sm font-medium text-white shadow-lift transition hover:bg-[#5d4b86] active:scale-[0.98]"
+        >
+          {open ? (
+            <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
+              <path
+                d="M6 6l12 12M18 6L6 18"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
+              <path
+                d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.7 8.7 0 0 1-3.8-.9L3 21l1.9-5.1A8.4 8.4 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.5 8.5 0 0 1 21 11.5z"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinejoin="round"
+              />
+              <circle cx="9" cy="11.5" r="1.15" fill="currentColor" />
+              <circle cx="12.5" cy="11.5" r="1.15" fill="currentColor" />
+              <circle cx="16" cy="11.5" r="1.15" fill="currentColor" />
+            </svg>
+          )}
+          <span>{open ? "Close" : "Chat"}</span>
+        </button>
+      </div>
+
+      {open && (
+        <>
+          <button
+            type="button"
+            aria-label="Close chat"
+            onClick={close}
+            className="fixed inset-0 z-[60] bg-[#1a1d26]/35"
+          />
+
+          {/* Floating panel on all sizes — not full screen */}
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Chat with iSofton"
+            className="fixed z-[61] flex flex-col overflow-hidden rounded-[24px] border border-[#ebe4f4] bg-white shadow-[0_20px_50px_-20px_rgba(26,29,38,0.35)] max-sm:inset-x-3 max-sm:bottom-[max(5.5rem,calc(env(safe-area-inset-bottom)+4.75rem))] max-sm:top-auto max-sm:h-[min(520px,calc(100dvh-8.5rem))] sm:bottom-[max(5.5rem,calc(env(safe-area-inset-bottom)+4.5rem))] sm:right-[max(1.25rem,env(safe-area-inset-right))] sm:h-[min(560px,calc(100dvh-8rem))] sm:w-[min(370px,calc(100vw-2.5rem))] sm:rounded-[26px]"
+          >
+            {panel}
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 

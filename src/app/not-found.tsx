@@ -5,7 +5,7 @@ export default function NotFound() {
     <PageShell>
       <section>
         <Container className="py-24">
-          <div className="soft-card max-w-xl rounded-[28px] p-8">
+          <div className="soft-card max-w-xl rounded-[28px] p-5 sm:p-8">
             <p className="text-sm font-medium text-lavender-deep">404</p>
             <h1 className="mt-3 font-display text-4xl font-medium">This page is not here.</h1>
             <p className="mt-4 max-w-md text-ink-soft">

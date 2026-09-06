@@ -6,7 +6,6 @@ import { GrowthSteps } from "@/components/GrowthSteps";
 import { NotchCard } from "@/components/NotchCard";
 import { HeroVisual } from "@/components/HeroVisual";
 import { ReviewsCarousel } from "@/components/ReviewsCarousel";
-import { SoftBg } from "@/components/SoftBg";
 import { TrustBand } from "@/components/TrustBand";
 import { ButtonLink, Container, CtaBand } from "@/components/ui";
 import { clients, services, steps, work } from "@/lib/data";
@@ -43,14 +42,12 @@ const who = [
 
 export default function HomePage() {
   return (
-    <div className="relative bg-mesh">
-      <SoftBg />
-
-      <section className="relative overflow-hidden">
+    <div className="relative w-full min-w-0 max-w-full">
+      <section className="relative overflow-x-clip">
         <div className="pointer-events-none absolute inset-0 bg-hero-wash opacity-80" aria-hidden />
         <Container className="relative py-14 sm:py-16 lg:py-20 xl:py-24">
           <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14 xl:gap-20">
-            <div className="max-w-2xl">
+            <div className="max-w-2xl min-w-0">
               <h1 className="hero-rise hero-rise-delay-2 font-display text-[30px] font-semibold leading-[1.12] tracking-tight text-ink sm:text-5xl sm:leading-[1.08] lg:text-[56px] xl:text-[62px]">
                 Let&apos;s build it <span className="text-lavender-deep">together.</span>
               </h1>
@@ -80,7 +77,7 @@ export default function HomePage() {
               </ul>
             </div>
 
-            <div className="hero-rise hero-rise-delay-4 relative">
+            <div className="hero-rise hero-rise-delay-4 relative min-w-0">
               <HeroVisual />
             </div>
           </div>
@@ -157,9 +154,9 @@ export default function HomePage() {
             </h2>
           </div>
           <div className="mt-10">
-            <CardGrid cols={3}>
+            <CardGrid cols={3} ariaLabel="What sets us apart" tabs={["Agency", "Freelance", "Hire"]}>
             {differences.map((item) => (
-              <article key={item.title} className="soft-card rounded-[24px] p-6">
+              <article key={item.title} className="soft-card rounded-[22px] p-5 sm:rounded-[24px] sm:p-6">
                 <h3 className="font-display text-lg font-medium">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-ink-soft">{item.body}</p>
               </article>
@@ -243,14 +240,14 @@ export default function HomePage() {
             </h2>
           </div>
           <div className="mt-10">
-            <CardGrid cols={3}>
+            <CardGrid cols={3} ariaLabel="Who we help" tabs={["Idea", "Tools", "Now"]}>
             {who.map((item, index) => (
               <article
                 key={item.title}
-                className="soft-card relative h-full overflow-hidden rounded-[24px] p-6 sm:p-7"
+                className="soft-card relative h-full overflow-hidden rounded-[22px] p-5 sm:rounded-[24px] sm:p-7"
               >
                 <span
-                  className="pointer-events-none absolute -right-1 -top-3 font-display text-[76px] font-semibold leading-none text-lavender-deep/[0.07]"
+                  className="pointer-events-none absolute right-3 top-2 font-display text-[64px] font-semibold leading-none text-lavender-deep/[0.07] sm:-right-1 sm:-top-3 sm:text-[76px]"
                   aria-hidden
                 >
                   0{index + 1}
@@ -308,9 +305,9 @@ export default function HomePage() {
             Four quiet phases.
           </h2>
           <div className="mt-10">
-            <CardGrid cols={4}>
+            <CardGrid cols={4} ariaLabel="Process phases" tabs={["Scope", "Design", "Build", "Launch"]}>
             {steps.map((step) => (
-              <article key={step.n} className="soft-card rounded-[24px] p-5">
+              <article key={step.n} className="soft-card rounded-[22px] p-5 sm:rounded-[24px]">
                 <p className="text-sm font-medium text-lavender-deep">Phase {step.n}</p>
                 <h3 className="mt-3 font-display text-lg font-medium">{step.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-ink-soft">{step.body}</p>
@@ -323,10 +320,12 @@ export default function HomePage() {
 
       <section className="relative py-10 sm:py-10 sm:py-14 lg:py-20 xl:py-24">
         <Container>
-          <div className="flex items-end justify-between gap-4">
-            <div>
+          <div className="flex items-end justify-between gap-3 sm:gap-4">
+            <div className="min-w-0">
               <p className="text-sm font-medium text-lavender-deep">Work</p>
-              <h2 className="mt-2 font-display text-[26px] font-medium sm:text-4xl xl:text-[42px]">Example products</h2>
+              <h2 className="mt-2 font-display text-[26px] font-medium sm:text-4xl xl:text-[42px]">
+                Example products
+              </h2>
             </div>
             <ButtonLink href="/work" variant="ghost">
               View work

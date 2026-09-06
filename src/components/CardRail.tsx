@@ -3,9 +3,7 @@
 import { Children, type ReactNode, useEffect, useRef, useState } from "react";
 
 /**
- * A horizontal card rail: one card per screen on phones with dots underneath,
- * two or three per view from tablet up, with arrows. Scrolls by whole pages so
- * a card is never left half-cut.
+ * One full-width card on phones with dots; multi-card from tablet up.
  */
 export function CardRail({
   children,
@@ -30,7 +28,7 @@ export function CardRail({
     const node = trackRef.current;
     const card = node?.firstElementChild as HTMLElement | null;
     if (!node || !card) return 0;
-    const gap = parseFloat(getComputedStyle(node).columnGap || "20") || 20;
+    const gap = parseFloat(getComputedStyle(node).columnGap || "0") || 0;
     return card.offsetWidth + gap;
   };
 
@@ -68,7 +66,7 @@ export function CardRail({
   };
 
   return (
-    <div>
+    <div className="min-w-0 w-full">
       <div className="mb-4 hidden justify-end gap-2 sm:flex">
         {([-1, 1] as const).map((direction) => (
           <button
@@ -93,19 +91,22 @@ export function CardRail({
 
       <div
         ref={trackRef}
-        className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-4 pb-3 pt-1 sm:mx-0 sm:px-1 xl:gap-6"
+        className="no-scrollbar flex w-full min-w-0 snap-x snap-mandatory gap-0 overflow-x-auto overscroll-x-contain scroll-smooth sm:gap-5 xl:gap-6"
         role="region"
         aria-label={ariaLabel}
       >
         {items.map((child, index) => (
-          <div key={index} className={`${width} shrink-0 snap-center sm:snap-start`}>
+          <div
+            key={index}
+            className={`${width} min-w-full shrink-0 snap-start sm:min-w-0`}
+          >
             {child}
           </div>
         ))}
       </div>
 
       {items.length > 1 && (
-        <div className="mt-3 flex justify-center gap-2 sm:hidden">
+        <div className="mt-5 flex justify-center gap-2 sm:hidden">
           {items.map((_, index) => (
             <button
               key={index}

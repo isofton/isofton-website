@@ -83,7 +83,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <section className="relative py-10 sm:py-14 lg:py-20">
         <Container className="grid gap-5 lg:grid-cols-2 xl:gap-6">
           <Reveal className="h-full">
-            <div className="soft-card h-full rounded-[28px] p-7">
+            <div className="soft-card h-full rounded-[28px] p-5 sm:p-7">
               <p className="text-sm font-medium text-lavender-deep">Outcomes</p>
               <h2 className="mt-2 font-display text-2xl font-medium sm:text-3xl">
                 What you walk away with
@@ -100,7 +100,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           </Reveal>
 
           <Reveal className="h-full" delay={90}>
-            <div className="soft-card h-full rounded-[28px] p-7">
+            <div className="soft-card h-full rounded-[28px] p-5 sm:p-7">
               <p className="text-sm font-medium text-lavender-deep">Scope</p>
               <h2 className="mt-2 font-display text-2xl font-medium sm:text-3xl">How we can help</h2>
               <ul className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -130,7 +130,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             <CardGrid cols={3}>
             {service.phases.map((phase, index) => (
               <Reveal key={phase.title} className="h-full" delay={index * 80}>
-                <article className="soft-card h-full rounded-[24px] p-6">
+                <article className="soft-card h-full rounded-[24px] p-5 sm:p-6">
                   <p className="font-display text-sm font-medium text-lavender-deep">
                     Phase 0{index + 1}
                   </p>
@@ -167,7 +167,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           </Reveal>
 
           <Reveal delay={100}>
-            <div className="soft-card rounded-[28px] p-7">
+            <div className="soft-card rounded-[28px] p-5 sm:p-7">
               <p className="text-sm font-medium text-lavender-deep">Questions we get</p>
               <dl className="mt-6 space-y-5">
                 {service.faqs.map((faq) => (

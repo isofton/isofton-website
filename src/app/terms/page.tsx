@@ -16,7 +16,7 @@ export default function TermsPage() {
       />
       <section>
         <Container className="py-14">
-          <div className="soft-card mx-auto max-w-3xl space-y-6 rounded-[28px] p-8 leading-7 text-ink-soft">
+          <div className="soft-card mx-auto max-w-3xl space-y-6 rounded-[28px] p-5 leading-7 text-ink-soft sm:p-8">
             <p>
               Content on this website is for general information. Project work is governed by a
               written agreement we share before any paid engagement starts.

@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Exo } from "next/font/google";
 import { ChatWidget } from "@/components/ChatWidget";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { SoftBg } from "@/components/SoftBg";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -34,12 +35,20 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#f7f8fb",
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={exo.variable}>
-      <body className={`${exo.className} min-h-screen`}>
+    <html lang="en" className={`${exo.variable} h-full`}>
+      <body className={`${exo.className} relative min-h-dvh w-full max-w-full`}>
+        <SoftBg />
         <Header />
-        <main>{children}</main>
+        <main className="relative z-0 w-full min-w-0 max-w-full overflow-x-clip">{children}</main>
         <Footer />
         <ChatWidget />
       </body>

@@ -80,7 +80,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-4 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-4 pb-[max(5.5rem,calc(env(safe-area-inset-bottom)+1rem))] text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:pb-4">
           <p>© {new Date().getFullYear()} {site.legalName}</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-white">

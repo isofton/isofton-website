@@ -16,7 +16,7 @@ export default function PrivacyPage() {
       />
       <section>
         <Container className="py-14">
-          <div className="soft-card mx-auto max-w-3xl space-y-6 rounded-[28px] p-8 leading-7 text-ink-soft">
+          <div className="soft-card mx-auto max-w-3xl space-y-6 rounded-[28px] p-5 leading-7 text-ink-soft sm:p-8">
             <p>
               When you use the contact form or email us, we receive the details you send: name, email,
               company, and your message. We use that information to respond and, if we work together,

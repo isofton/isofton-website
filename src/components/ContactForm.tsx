@@ -36,7 +36,7 @@ export function ContactForm() {
 
   if (sent) {
     return (
-      <div className="soft-card rounded-[28px] p-8">
+      <div className="soft-card rounded-[28px] p-5 sm:p-8">
         <p className="text-sm font-medium text-lavender-deep">Sent to your mail app</p>
         <h2 className="mt-2 font-display text-2xl font-medium">
           If nothing opened, write to contact@isofton.com.
@@ -46,7 +46,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="soft-card rounded-[28px] p-6 sm:p-8">
+    <form onSubmit={onSubmit} className="soft-card rounded-[28px] p-5 sm:p-8">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block text-sm">
           <span className="mb-1.5 block text-ink-soft">Name</span>

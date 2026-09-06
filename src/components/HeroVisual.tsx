@@ -163,30 +163,31 @@ export function HeroVisual() {
 
   return (
     <div
-      className="relative"
+      className="relative isolate"
       onMouseEnter={() => setHeld(true)}
       onMouseLeave={() => setHeld(false)}
       onFocusCapture={() => setHeld(true)}
       onBlurCapture={() => setHeld(false)}
     >
-      <div
-        className="pointer-events-none absolute -left-10 -top-10 -z-10 h-64 w-64 rounded-full bg-[#dcd0f3]/55 blur-3xl"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -bottom-12 -right-8 -z-10 h-56 w-56 rounded-full bg-[#c8e7f5]/50 blur-3xl"
-        aria-hidden
-      />
+      {/* Soft glow behind — clipped separately so it never stains the card edge */}
+      <div className="pointer-events-none absolute inset-3 -z-10 overflow-hidden rounded-[28px]" aria-hidden>
+        <div className="absolute -left-8 -top-8 h-56 w-56 rounded-full bg-[#dcd0f3]/45 blur-3xl" />
+        <div className="absolute -bottom-10 -right-6 h-48 w-48 rounded-full bg-[#c8e7f5]/40 blur-3xl" />
+      </div>
 
-      <div className="overflow-hidden rounded-[26px] border border-white/80 bg-white/90 shadow-lift backdrop-blur-xl">
+      {/* Shadow on outer shell; overflow clip on inner — avoids dark corner fringe */}
+      <div className="rounded-[20px] bg-white shadow-[0_16px_40px_-24px_rgba(76,61,110,0.22)] sm:rounded-[26px] sm:shadow-[0_22px_50px_-28px_rgba(76,61,110,0.2)]">
+        <div className="overflow-hidden rounded-[20px] ring-1 ring-[#e8e2f2]/90 sm:rounded-[26px]">
         {/* Header */}
-        <div className="flex items-center justify-between gap-2 px-4 pt-4 sm:px-6 sm:pt-6">
-          <p className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-ink-muted">
-            <RobotMark className="h-5 w-5 text-lavender-deep" />
-            Software <span className="text-lavender-deep">+</span> AI
+        <div className="flex items-center justify-between gap-2 px-3.5 pt-3.5 sm:px-6 sm:pt-6">
+          <p className="flex min-w-0 items-center gap-1.5 text-[9px] font-medium uppercase tracking-[0.14em] text-ink-muted sm:gap-2 sm:text-[10px] sm:tracking-[0.16em]">
+            <RobotMark className="h-4 w-4 shrink-0 text-lavender-deep sm:h-5 sm:w-5" />
+            <span className="truncate">
+              Software <span className="text-lavender-deep">+</span> AI
+            </span>
           </p>
           <div
-            className="flex items-center gap-1 rounded-full bg-[#f4f2fa] p-1"
+            className="flex shrink-0 items-center gap-0.5 rounded-full bg-[#f4f2fa] p-0.5 sm:gap-1 sm:p-1"
             role="tablist"
             aria-label="What we build"
           >
@@ -197,7 +198,7 @@ export function HeroVisual() {
                 role="tab"
                 aria-selected={index === active}
                 onClick={() => setActive(index)}
-                className={`rounded-full px-2.5 py-1.5 text-[11px] font-medium transition sm:px-3 sm:text-xs ${
+                className={`rounded-full px-2 py-1.5 text-[10px] font-medium transition sm:px-3 sm:text-xs ${
                   index === active ? "bg-white text-ink shadow-sm" : "text-ink-muted hover:text-ink"
                 }`}
               >
@@ -208,7 +209,7 @@ export function HeroVisual() {
         </div>
 
         {/* Photo with glass overlays */}
-        <div className="relative mx-4 mt-3.5 h-44 overflow-hidden rounded-[18px] bg-[#f1eef8] sm:mx-6 sm:mt-4 sm:h-64 sm:rounded-[20px]">
+        <div className="relative mx-3.5 mt-3 h-44 overflow-hidden rounded-[16px] bg-[#f1eef8] sm:mx-6 sm:mt-4 sm:h-64 sm:rounded-[20px]">
           {products.map((item, index) => (
             <Image
               key={item.id}
@@ -255,7 +256,7 @@ export function HeroVisual() {
         </div>
 
         {/* Copy */}
-        <div key={`copy-${product.id}`} className="hero-fade px-4 pt-3.5 sm:px-6 sm:pt-4">
+        <div key={`copy-${product.id}`} className="hero-fade px-3.5 pt-3.5 sm:px-6 sm:pt-4">
           <p className="font-display text-base font-medium leading-snug text-ink sm:text-lg">
             {product.title}
           </p>
@@ -270,7 +271,7 @@ export function HeroVisual() {
         </div>
 
         {/* Footer */}
-        <div className="mt-3.5 flex items-center justify-between gap-3 border-t border-[#eee9f6] px-4 py-3.5 sm:mt-4 sm:px-6 sm:py-4">
+        <div className="mt-3.5 flex items-center justify-between gap-3 border-t border-[#eee9f6] px-3.5 py-3.5 sm:mt-4 sm:px-6 sm:py-4">
           <div>
             <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-ink-muted">
               Your goal
@@ -285,6 +286,7 @@ export function HeroVisual() {
             </span>
             <span className="font-display text-sm font-medium text-ink">6–12 weeks</span>
           </div>
+        </div>
         </div>
       </div>
     </div>
